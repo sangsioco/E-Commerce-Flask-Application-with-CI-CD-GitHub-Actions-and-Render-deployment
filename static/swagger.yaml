@@ -1,4 +1,4 @@
-swagger: '2.0'
+swagger: '4.11.1'
 info:
   title: "E-commerce API"
   description: "This is an API to manage an E-commerce application"
