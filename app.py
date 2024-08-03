@@ -61,7 +61,7 @@ def blue_print_config(app):
 
 
 def configure_rate_limit():
-    limiter.limit("5 per day")(customer_blueprint)
+    limiter.limit("100 per day")(customer_blueprint) # changed customer limit from 5 to 100 per day for miniproject
 
 # adding from filtering video in lesson 2
 def init_customers_info_data():

@@ -18,3 +18,30 @@ def login():
             "message":"User does not exist"
         }
         return jsonify(resp), 404
+    
+def create_customer_account():
+    try:
+        account_data = request.json
+        new_account = customerAccountService.create(account_data)
+        return jsonify(new_account), 201
+    except Exception as e:
+        return jsonify({"message": str(e)}), 400
+
+# added for miniproject
+def update_customer_account(account_id):
+    try:
+        account_data = request.json
+        updated_account = customerAccountService.update(account_id, account_data)
+        if updated_account:
+            return jsonify(updated_account), 200
+        else:
+            return jsonify({"message": "Account not found"}), 404
+    except Exception as e:
+        return jsonify({"message": str(e)}), 400
+
+def delete_customer_account(account_id):
+    success = customerAccountService.delete(account_id)
+    if success:
+        return jsonify({"message": "Account deleted successfully"}), 200
+    else:
+        return jsonify({"message": "Account not found"}), 404

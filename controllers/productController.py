@@ -14,6 +14,38 @@ def save():
         return product_schema.jsonify(product_save), 201
     except ValueError as e:
         return jsonify({"error": str(e)}), 400
+
+# added for miniproject
+def read_product(product_id):
+    product = productService.find_by_id(product_id)
+    if product:
+        return product_schema.jsonify(product), 200
+    else:
+        return jsonify({"message": "Product not found"}), 404
+
+def update_product(product_id):
+    try:
+        product_data = product_schema.load(request.json)
+        updated_product = productService.update(product_id, product_data)
+        if updated_product:
+            return product_schema.jsonify(updated_product), 200
+        else:
+            return jsonify({"message": "Product not found"}), 404
+    except ValidationError as err:
+        return jsonify(err.messages), 400
+    except ValueError as e:
+        return jsonify({"error": str(e)}), 400
+
+def delete_product(product_id):
+    success = productService.delete(product_id)
+    if success:
+        return jsonify({"message": "Product deleted successfully"}), 200
+    else:
+        return jsonify({"message": "Product not found"}), 404
+
+def list_all_products():
+    products = productService.find_all()
+    return products_schema.jsonify(products), 200
     
 # added for product pagination
 def find_all_pagination():

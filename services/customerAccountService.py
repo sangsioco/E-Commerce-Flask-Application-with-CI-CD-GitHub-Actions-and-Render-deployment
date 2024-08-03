@@ -27,3 +27,27 @@ def login_customer(username, password):
             return None
     else:
         return None
+    
+# added for miniproject
+def create(account_data):
+    account = CustomerAccount(**account_data)
+    db.session.add(account)
+    db.session.commit()
+    return account
+
+def update(account_id, account_data):
+    account = CustomerAccount.query.get(account_id)
+    if account:
+        for key, value in account_data.items():
+            setattr(account, key, value)
+        db.session.commit()
+        return account
+    return None
+
+def delete(account_id):
+    account = CustomerAccount.query.get(account_id)
+    if account:
+        db.session.delete(account)
+        db.session.commit()
+        return True
+    return False

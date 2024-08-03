@@ -46,3 +46,4 @@ def find_by_id(id):
     query = select(Order).joun(Customer).where(Customer.id == Order.customer_id).filter_by(id=id)
     order = db.session.execute(query).scalar_one_or_none()
     return order
+

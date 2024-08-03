@@ -39,3 +39,24 @@ def find_all_pagination():
 def total_order_value():
     customer_order_values = get_total_order_value_per_customer()
     return jsonify([{'id': c.id, 'name': c.name, 'total_order_value': c.total_order_value} for c in customer_order_values])
+
+# update customer for miniproject
+def update_customer(customer_id):
+    try:
+        customer_data = customer_schema.load(request.json)
+    except ValidationError as err:
+        return jsonify(err.messages), 400
+
+    updated_customer = customerService.update(customer_id, customer_data)
+    if updated_customer:
+        return customer_schema.jsonify(updated_customer), 200
+    else:
+        return jsonify({"message": "Customer not found"}), 404
+
+# delete customer for miniproject
+def delete_customer(customer_id):
+    success = customerService.delete(customer_id)
+    if success:
+        return jsonify({"message": "Customer deleted successfully"}), 200
+    else:
+        return jsonify({"message": "Customer not found"}), 404

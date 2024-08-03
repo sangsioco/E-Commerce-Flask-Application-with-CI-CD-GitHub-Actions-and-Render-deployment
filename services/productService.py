@@ -12,7 +12,31 @@ def save(product_data):
             session.commit()
         session.refresh(new_product)
         return new_product
-    
+
+# added for miniproject
+def find_by_id(product_id):
+    return Product.query.get(product_id)
+
+def update(product_id, product_data):
+    product = Product.query.get(product_id)
+    if product:
+        for key, value in product_data.items():
+            setattr(product, key, value)
+        db.session.commit()
+        return product
+    return None
+
+def delete(product_id):
+    product = Product.query.get(product_id)
+    if product:
+        db.session.delete(product)
+        db.session.commit()
+        return True
+    return False
+
+def find_all():
+    return Product.query.all()
+   
 # added for products pagination
 def find_all_pagination(page=1, per_page=10):
     products = db.paginate(select(Product), page=page, per_page=per_page)
@@ -32,3 +56,5 @@ def get_top_selling_products():
         .all()
     )
     return top_selling_products
+
+

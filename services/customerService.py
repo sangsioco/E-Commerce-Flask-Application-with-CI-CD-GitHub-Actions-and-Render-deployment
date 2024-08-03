@@ -63,3 +63,21 @@ def get_total_order_value_per_customer(threshold):
         .all()
     )
     return total_order_values
+
+# added for miniproject
+def update(customer_id, customer_data):
+    customer = Customer.query.get(customer_id)
+    if customer:
+        for key, value in customer_data.items():
+            setattr(customer, key, value)
+        db.session.commit()
+        return customer
+    return None
+
+def delete(customer_id):
+    customer = Customer.query.get(customer_id)
+    if customer:
+        db.session.delete(customer)
+        db.session.commit()
+        return True
+    return False
