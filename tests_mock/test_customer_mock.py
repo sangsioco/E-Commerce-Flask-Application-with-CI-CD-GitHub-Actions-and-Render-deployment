@@ -39,12 +39,6 @@ def mock_db_session(mock_user):
         mock_execute.return_value.scalar_one_or_none.return_value = mock_user
         yield mock_execute
 
-@pytest.fixture
-def mock_customer_query():
-    # Mock the app.models.Customer.query.all method
-    with patch('app.models.Customer.query.all') as mock_query_all:
-        yield mock_query_all
-
 def test_login_customer(mock_db_session, mock_user, faker):
     mock_user_obj, _ = mock_user  # Unpack the tuple
     response = login_customer(mock_user_obj.username, faker.password())
