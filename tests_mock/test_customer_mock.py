@@ -8,7 +8,7 @@ from app import create_app
 @pytest.fixture
 def app():
     # Create and configure the app instance
-    app = create_app()
+    app = create_app('DevelopmentConfig')
     return app
 
 @pytest.fixture
@@ -46,7 +46,8 @@ def mock_customer_query():
         yield mock_query_all
 
 def test_login_customer(mock_db_session, mock_user, faker):
-    response = login_customer(mock_user.username, faker.password())
+    mock_user_obj, _ = mock_user  # Unpack the tuple
+    response = login_customer(mock_user_obj.username, faker.password())
     assert response['status'] == 'success'
 
 def test_get_customers(client, mock_customer_query):
