@@ -1,13 +1,21 @@
 import unittest
 from unittest.mock import patch
-from app import app
+from app import create_app
+
+class MockProduction:
+    def __init__(self, id, product_id, quantity_produced, date_produced):
+        self.id = id
+        self.product_id = product_id
+        self.quantity_produced = quantity_produced
+        self.date_produced = date_produced
 
 class TestProductionEndpoints(unittest.TestCase):
     def setUp(self):
+        app = create_app()  
         self.app = app.test_client()
         self.app.testing = True
 
-    @patch('app.models.Production.query.all')
+    @patch('models.production.Production.query.all')
     def test_get_productions(self, mock_query_all):
         mock_query_all.return_value = [MockProduction(1, 1, 100, '2024-08-01')]
         response = self.app.get('/api/productions')

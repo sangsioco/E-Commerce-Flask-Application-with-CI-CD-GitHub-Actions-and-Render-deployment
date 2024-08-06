@@ -1,13 +1,20 @@
 import unittest
 from unittest.mock import patch
-from app import app
+from app import create_app
+
+class MockProduct:
+    def __init__(self, id, name, price):
+        self.id = id
+        self.name = name
+        self.price = price
 
 class TestProductEndpoints(unittest.TestCase):
     def setUp(self):
+        app = create_app()  # Use the factory function if your app is set up this way
         self.app = app.test_client()
         self.app.testing = True
 
-    @patch('app.models.Product.query.all')
+    @patch('models.product.Product.query.all')
     def test_get_products(self, mock_query_all):
         mock_query_all.return_value = [MockProduct(1, 'Widget', 10.99)]
         response = self.app.get('/api/products')

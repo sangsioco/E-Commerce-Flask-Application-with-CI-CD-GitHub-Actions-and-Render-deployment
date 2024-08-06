@@ -1,13 +1,20 @@
 import unittest
 from unittest.mock import patch
-from app import app
+from app import create_app 
+
+class MockOrder:
+    def __init__(self, id, date, status):
+        self.id = id
+        self.date = date
+        self.status = status
 
 class TestOrderEndpoints(unittest.TestCase):
     def setUp(self):
+        app = create_app() 
         self.app = app.test_client()
         self.app.testing = True
 
-    @patch('app.models.Order.query.all')
+    @patch('models.order.Order.query.all')
     def test_get_orders(self, mock_query_all):
         mock_query_all.return_value = [MockOrder(1, '2024-08-01', 'Completed')]
         response = self.app.get('/api/orders')
