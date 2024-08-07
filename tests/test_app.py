@@ -3,6 +3,7 @@ from unittest.mock import MagicMock, patch
 from faker import Faker
 from werkzeug.security import generate_password_hash, check_password_hash
 from app import create_app
+from config import TestConfig
 from services.customerAccountService import login_customer
 
 class TestLogInCustomer(unittest.TestCase):
