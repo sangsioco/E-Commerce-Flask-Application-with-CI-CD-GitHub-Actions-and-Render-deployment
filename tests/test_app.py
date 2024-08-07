@@ -15,7 +15,10 @@ class TestLogInCustomer(unittest.TestCase):
         mock_user.roles = [MagicMock(role_name='admin'), MagicMock(role_name='user')]
         mock_user.username = faker.user_name()
         mock_user.password = generate_password_hash(password)
-        
+
+        # Ensure password is a string
+        self.assertIsInstance(mock_user.password, str)
+
         # Print debug information for the mock user
         print("Mock User:", mock_user.username, mock_user.password)
 
