@@ -12,20 +12,31 @@ def find_all():
     return customer_accounts
 
 def login_customer(username, password):
+    print(f"Attempting to log in user: {username}")
     user = db.session.execute(
         db.select(CustomerAccount).where(CustomerAccount.username == username)).scalar_one_or_none()
     
-    if user and check_password_hash(user.password, password):
-        role_names = [role.role_name for role in user.roles]
-        auth_token = encode_token(user.id, role_names)
-        resp = {
-            "status": "success",
-            "message": "Successfully logged in",
-            'auth_token': auth_token
-        }
-        return resp
+    print(f"Retrieved user: {user}")
+    
+    if user:
+        print(f"Checking password for user: {user.username}")
+        if check_password_hash(user.password, password):
+            print("Password check passed")
+            role_names = [role.role_name for role in user.roles]
+            auth_token = encode_token(user.id, role_names)
+            resp = {
+                "status": "success",
+                "message": "Successfully logged in",
+                'auth_token': auth_token
+            }
+            return resp
+        else:
+            print("Password check failed")
+            return None
     else:
+        print("User not found")
         return None
+
     
 # added for miniproject
 def create(account_data):
