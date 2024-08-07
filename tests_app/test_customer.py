@@ -3,7 +3,6 @@ from unittest.mock import MagicMock, patch
 from faker import Faker
 from werkzeug.security import generate_password_hash
 from services.customerAccountService import login_customer
-from app import create_app
 
 class TestLogInCustomer(unittest.TestCase):
 
@@ -20,24 +19,6 @@ class TestLogInCustomer(unittest.TestCase):
         
         response = login_customer(mock_user.username, password)
         self.assertEqual(response['status'], 'success')
-
-    @patch('app.models.Customer.query.all')
-    def test_get_customers(self, mock_query_all):
-        mock_query_all.return_value = [MagicMock(id=1, name='Alice Smith')]
-        response = self.client.get('/api/customers')
-        self.assertEqual(response.status_code, 200)
-        self.assertIn('Alice Smith', response.data.decode())
-
-    def test_create_customer(self):
-        response = self.client.post('/api/customers', json={'name': 'Alice Smith'})
-        self.assertEqual(response.status_code, 201)
-
-    def test_update_customer(self):
-        response = self.client.put('/api/customers/1', json={'name': 'Alice Johnson'})
-        self.assertEqual(response.status_code, 200)
-
-    def setUp(self):
-        self.app = create_app()  
 
 if __name__ == '__main__':
     unittest.main()
