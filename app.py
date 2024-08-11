@@ -38,7 +38,7 @@ swagger_blueprint = get_swaggerui_blueprint(
 )
 
 
-def app(config_name):
+def create_app(config_name):
     app = Flask(__name__)
 
     app.config.from_object(f'config.{config_name}')
@@ -102,6 +102,8 @@ def init_roles_customers_data():
                 CustomerManagementRole(customer_management_id=3, role_id=3),
             ]
             session.add_all(roles_customers)
+if __name__ == '__main__':
+    app = create_app('DevelopmentConfig')
 
     blue_print_config(app)
     configure_rate_limit()
