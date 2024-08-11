@@ -38,9 +38,9 @@ swagger_blueprint = get_swaggerui_blueprint(
 )
 
 
-def create_app(config_name):
-    app = Flask(__name__)
+app = Flask(__name__)
 
+def create_app(config_name):
     app.config.from_object(f'config.{config_name}')
     db.init_app(app)
     ma.init_app(app)
