@@ -37,6 +37,6 @@ class TestLogInCustomer(unittest.TestCase):
         self.assertEqual(result["status"], "success")
         self.assertEqual(result["message"], "Successfully logged in")
         self.assertIn("auth_token", result)
-
+     
 if __name__ == '__main__':
     unittest.main()
