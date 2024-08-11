@@ -6,6 +6,7 @@ from services.customerAccountService import login_customer
 
 class TestLogInCustomer(unittest.TestCase):
 
+    @patch('utils.util.SECRET_KEY', 'testkey')
     @patch('services.customerAccountService.db.session.execute')
     def test_login_customer(self, mock_execute):
         faker = Faker()
