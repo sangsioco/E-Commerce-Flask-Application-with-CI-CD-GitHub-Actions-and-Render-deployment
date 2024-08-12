@@ -16,7 +16,7 @@ Installation:
 3. Run the application.  
 Using CI/CD:  
 4. For CI/CD Action, you can access my Action past test run or re-run the workflow using the following link: https://github.com/sangsioco/Module-16-MiniProject/actions
-5. You may also upload on your own GitHub account to test.
+5. You may also upload on your own GitHub account to test.  
 Using Render:  
 6. Upload the project to your GitHub account.
 7. Login to your Render account.
